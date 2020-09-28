@@ -11,8 +11,13 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" Plugin 'leafgarland/typescript-vim'
+
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
+
+" YCM
+" Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -44,9 +49,9 @@ map k gk
 set backspace=indent,eol,start
 
 " Solarized stuff
-let g:solarized_termtrans = 1
-set background=dark
-colorscheme solarized
+" let g:solarized_termtrans = 1
+" set background=dark
+" colorscheme solarized
 
 " Indentation stuff
 let g:indent_guides_auto_colors = 0
@@ -88,6 +93,14 @@ set foldcolumn=1
 " Make :E work
 cabbrev E Explore
 
-" 80 column limit
+" 80 column limit and set auto-wrap
 highlight ColorColumn ctermbg=236
 set colorcolumn=80
+set textwidth=80
+
+function! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfunction
+autocmd BufWritePre * :call TrimWhitespace()
